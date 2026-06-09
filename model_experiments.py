@@ -14,16 +14,19 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_sc
 
 print("--- Starting Full Expanded Visualization & Machine Learning Pipeline ---")
 
+# Step 1: Read raw data to capture structural missing value tracking maps
 df_raw = pd.read_csv('Credit_Card.csv', sep=';')
 
-print("Generating Figure 7: Missing Values Heatmap...")
+# CORRECTED: Assigned to Figure 6 to prevent overlapping filenames
+print("Generating Figure 6: Missing Values Heatmap...")
 plt.figure(figsize=(10, 5))
 sns.heatmap(df_raw.isnull(), cbar=False, cmap='viridis')
-plt.title('Figure 7: Missing Values Heatmap')
+plt.title('Figure 6: Missing Values Heatmap')
 plt.tight_layout()
-plt.savefig('Figure_7_Missing_Values_Heatmap.png', dpi=300)
+plt.savefig('Figure_6_Missing_Values_Heatmap.png', dpi=300)
 plt.close()
 
+# Step 2: Read clean data cache for core model processing
 df = pd.read_csv('Cleaned_Credit_Card.csv')
 
 print("Generating Figure 1: Distribution of LIMIT_BAL...")
@@ -66,6 +69,7 @@ plt.tight_layout()
 plt.savefig('Figure_5_Distribution_of_EDUCATION.png', dpi=300)
 plt.close()
 
+# Prepare feature boundaries and split datasets
 X = df.drop(columns=['ID', 'default.payment.next.month', 'risk_leak'])
 y = df['default.payment.next.month']
 
@@ -108,6 +112,7 @@ for name, algorithm in models.items():
     roc_auc = auc(fpr, tpr)
     plt.plot(fpr, tpr, label=f'{name} (AUC = {roc_auc:.3f})')
 
+# CORRECTED: Kept as Figure 7 to match sequential evaluation flows
 print("Generating Figure 7: ROC Curve Plot Comparison...")
 plt.plot([0, 1], [0, 1], 'k--', label='Base Rate (Chance)')
 plt.xlim([0.0, 1.0])
